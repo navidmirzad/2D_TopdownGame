@@ -16,6 +16,8 @@ function start() {
 function tick() {
   requestAnimationFrame(tick);
 
+  movePlayer();
+
   displayPlayerAtPosition();
 }
 
@@ -78,3 +80,29 @@ const controls = {
   up: false,
   down: false,
 };
+
+function movePlayer() {
+  if (controls.right) {
+    player.x++;
+  } else if (controls.right) {
+    player.x--;
+  }
+
+  if (controls.left) {
+    player.x--;
+  } else if (controls.left) {
+    player.x++;
+  }
+
+  if (controls.up) {
+    player.y--;
+  } else if (controls.up) {
+    player.y++;
+  }
+
+  if (controls.down) {
+    player.y++;
+  } else if (controls.down) {
+    player.y--;
+  }
+}
