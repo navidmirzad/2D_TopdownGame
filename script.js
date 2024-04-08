@@ -81,6 +81,7 @@ const controls = {
   down: false,
 };
 
+/* // this functions allows a player to move in several directions at once
 function movePlayer() {
   if (controls.right) {
     player.x++;
@@ -104,5 +105,18 @@ function movePlayer() {
     player.y++;
   } else if (controls.down) {
     player.y--;
+  }
+} */
+
+// this function allows the player to only move in one direction at a time
+function movePlayer() {
+  if (controls.right) {
+    player.x++;
+  } else if (controls.left) {
+    player.x--;
+  } else if (controls.up) {
+    player.y--;
+  } else if (controls.down) {
+    player.y++;
   }
 }
