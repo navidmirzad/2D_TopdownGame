@@ -13,10 +13,15 @@ function start() {
   requestAnimationFrame(tick);
 }
 
-function tick() {
+let lastTimestamp = 0;
+
+function tick(timestamp) {
   requestAnimationFrame(tick);
 
-  movePlayer();
+  const deltaTime = (timestamp - lastTimestamp) / 1000;
+  lastTimestamp = timestamp;
+
+  movePlayer(deltaTime);
 
   displayPlayerAtPosition();
 }
