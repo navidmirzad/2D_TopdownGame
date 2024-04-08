@@ -30,6 +30,7 @@ function tick(timestamp) {
 const player = {
   x: 0,
   y: 0,
+  speed: 150,
 };
 
 function displayPlayerAtPosition() {
@@ -114,14 +115,15 @@ function movePlayer() {
 } */
 
 // this function allows the player to only move in one direction at a time
-function movePlayer() {
+function movePlayer(deltaTime) {
+  const speed = player.speed * deltaTime; // Calculate the distance to move based on speed and deltaTime
   if (controls.right) {
-    player.x++;
+    player.x += speed;
   } else if (controls.left) {
-    player.x--;
+    player.x -= speed;
   } else if (controls.up) {
-    player.y--;
+    player.y -= speed;
   } else if (controls.down) {
-    player.y++;
+    player.y += speed;
   }
 }
