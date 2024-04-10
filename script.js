@@ -95,22 +95,40 @@ function movePlayer(deltaTime) {
   player.moving = false; // reset moving state
   const speed = player.speed * deltaTime; // Calculate the distance to move based on speed and deltaTime
 
+  const newPos = {
+    x: player.x,
+    y: player.y,
+  };
+
   if (controls.right) {
     player.moving = true;
     player.direction = "right";
-    player.x += speed;
+    newPos.x += speed;
   } else if (controls.left) {
     player.moving = true;
     player.direction = "left";
-    player.x -= speed;
+    newPos.x -= speed;
   } else if (controls.up) {
     player.moving = true;
     player.direction = "up";
-    player.y -= speed;
+    newPos.y -= speed;
   } else if (controls.down) {
     player.moving = true;
     player.direction = "down";
-    player.y += speed;
+    newPos.y += speed;
+  }
+
+  if (canMoveTo(newPos)) {
+    player.x = newPos.x;
+    player.y = newPos.y;
+  }
+}
+
+function canMoveTo(pos) {
+  if (pos.x < 0 || pos.x > 484 || pos.y < 0 || pos.y > 340) {
+    return false;
+  } else {
+    return true;
   }
 }
 
