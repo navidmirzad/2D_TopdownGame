@@ -24,6 +24,7 @@ function tick(timestamp) {
   movePlayer(deltaTime);
 
   displayPlayerAtPosition();
+  displayPlayerAnimation();
 }
 
 // Model
@@ -31,6 +32,8 @@ const player = {
   x: 0,
   y: 0,
   speed: 150,
+  moving: false,
+  direction: undefined,
 };
 
 function displayPlayerAtPosition() {
@@ -87,43 +90,38 @@ const controls = {
   down: false,
 };
 
-/* // this functions allows a player to move in several directions at once
-function movePlayer() {
-  if (controls.right) {
-    player.x++;
-  } else if (controls.right) {
-    player.x--;
-  }
-
-  if (controls.left) {
-    player.x--;
-  } else if (controls.left) {
-    player.x++;
-  }
-
-  if (controls.up) {
-    player.y--;
-  } else if (controls.up) {
-    player.y++;
-  }
-
-  if (controls.down) {
-    player.y++;
-  } else if (controls.down) {
-    player.y--;
-  }
-} */
-
 // this function allows the player to only move in one direction at a time
 function movePlayer(deltaTime) {
+  player.moving = false; // reset moving state
   const speed = player.speed * deltaTime; // Calculate the distance to move based on speed and deltaTime
+
   if (controls.right) {
+    player.moving = true;
+    player.direction = "right";
     player.x += speed;
   } else if (controls.left) {
+    player.moving = true;
+    player.direction = "left";
     player.x -= speed;
   } else if (controls.up) {
+    player.moving = true;
+    player.direction = "up";
     player.y -= speed;
   } else if (controls.down) {
+    player.moving = true;
+    player.direction = "down";
     player.y += speed;
+  }
+}
+
+function displayPlayerAnimation() {
+  const visualPlayer = document.querySelector("#player");
+
+  if (player.moving) {
+    visualPlayer.classList.add("animate");
+    visualPlayer.classList.remove("up", "down", "right", "left");
+    visualPlayer.classList.add(player.direction);
+  } else {
+    visualPlayer.classList.remove("animate");
   }
 }

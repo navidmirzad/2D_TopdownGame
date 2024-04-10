@@ -36,4 +36,77 @@ body {
     image-rendering: pixelated;
 }
 
+#player.animate {
+    animation-duration: 1s;
+    animation-timing-function: steps(4);
+    animation-iteration-count: infinite;
+}
+
+
+/*********** UP **********/
+#player.up {
+    background-position: 0% -100%;
+    animation-name: up;
+}
+
+@keyframes up {
+    from {
+        background-position: 0% -100%;
+    }
+    to {
+        background-position: -400% -100%;
+    }
+}
+
+
+/*********** DOWN **********/
+
+#player.down {
+    background-position: 0% 0%;
+    animation-name: down;
+}
+
+@keyframes down {
+    from {
+        background-position: 0% 0%;
+    }
+    to {
+        background-position: -400% 0%;
+    }
+}
+
+
+/*********** RIGHT **********/
+
+#player.right {
+    background-position: 0% -300%;
+    animation-name: right;
+}
+
+@keyframes right {
+    from {
+        background-position: 0% -300%;
+    }
+    to {
+        background-position: -400% -300%;
+    }
+}
+
+
+/*********** LEFT **********/
+
+#player.left {
+    background-position: 0% -200%;
+    animation-name: left;
+}
+
+@keyframes left {
+    from {
+        background-position: 0% -200%;
+    }
+    to {
+        background-position: -400% -200%;
+    }
+}
+
 
