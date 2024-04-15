@@ -10,6 +10,9 @@ function start() {
   document.addEventListener("keydown", keyDown);
   document.addEventListener("keyup", keyUp);
 
+  createTiles();
+  displayTiles();
+
   requestAnimationFrame(tick);
 }
 
@@ -36,9 +39,27 @@ const player = {
   direction: undefined,
 };
 
-function displayPlayerAtPosition() {
-  const visualPlayer = document.querySelector("#player");
-  visualPlayer.style.translate = `${player.x}px ${player.y}px`;
+const tiles = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+  [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0],
+  [0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0],
+  [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+  [0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0],
+  [0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+  [0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+  [0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+  [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+  [0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+];
+
+const GRID_HEIGHT = tiles.length; // row
+const GRID_WIDTH = tiles[0].length; // col
+const TILE_SIZE = 32;
+
+function getTileAtCoordinate({ row, col }) {
+  return tiles[row][col];
 }
 
 function keyDown(event) {
@@ -142,4 +163,41 @@ function displayPlayerAnimation() {
   } else {
     visualPlayer.classList.remove("animate");
   }
+}
+
+function displayPlayerAtPosition() {
+  const visualPlayer = document.querySelector("#player");
+  visualPlayer.style.translate = `${player.x}px ${player.y}px`;
+}
+
+function createTiles() {
+  const background = document.querySelector("#background");
+  // For hvert af dem - lav en div med klassen item og tilføj til background, append
+  for (let row = 0; row < GRID_HEIGHT; row++) {
+    for (let col = 0; col < GRID_WIDTH; col++) {
+      const tile = document.createElement("div");
+      tile.classList.add("tile");
+      background.append(tile);
+    }
+  }
+  background.style.setProperty("--GRID_WIDTH", GRID_WIDTH);
+  background.style.setProperty("--GRID_HEIGHT", GRID_HEIGHT);
+  background.style.setProperty("--TILE_SIZE", TILE_SIZE + "px");
+}
+
+function displayTiles() {
+  const visualTiles = document.querySelector("#background .tile");
+
+  for (let row = 0; row < GRID_HEIGHT; row++) {
+    for (let col = 0; col < GRID_WIDTH; col++) {
+      const mode = getTileAtCoordinate({ row, col });
+      const visualTile = visualTiles[row * GRID_WIDTH + col];
+
+      visualTile.classList.add(getClassForTileType(modelTiles));
+    }
+  }
+}
+
+function getClassForTileType( typeType) {
+  switch(tileType)
 }

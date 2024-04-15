@@ -14,16 +14,29 @@ body {
     justify-content: center;
 }
 
-
-
 #background {
     grid-area: 1 / 1;
-    width: calc(16 * 32px);
-    height: calc(12 * 32px);
+    display: grid;
+    grid-template-columns: repeat(var(--GRID_WIDTH), max-content);
 }
 
-#items {
-    grid-area: 1 / 1;
+#background .tile {
+    width: var(--TILE_SIZE);
+    aspect-ratio: 1 / 1;
+
+    background-repeat: no-repeat;
+    background-size: 100%;
+    image-rendering: pixelated;
+
+    background-image: url('images/tiles/flowers.png')
+}
+
+.tile.path {
+    background-image: url('images/tiles/path.png')
+}
+
+.tile.grass {
+    background-image: url('images/tiles/path.png')
 }
 
 #characters {
@@ -33,7 +46,7 @@ body {
 #player {
     width: 32px;
     height: 40px;
-    background-image: url("images/characters/Character 1.png");
+    background-image: url("images/character/Character 1.png");
     background-size: 400% 400%;
     image-rendering: pixelated;
 }
