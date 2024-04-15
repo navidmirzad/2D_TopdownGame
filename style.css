@@ -48,8 +48,8 @@ body {
 }
 
 #player {
-    width: 32px;
-    height: 40px;
+    width: 22px;
+    height: 30px;
     background-image: url("/images/characters/Character 1.png");
     background-size: 400% 400%;
     image-rendering: pixelated;
