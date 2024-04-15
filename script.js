@@ -36,6 +36,8 @@ function tick(timestamp) {
 const player = {
   x: 0,
   y: 0,
+  regX: 10,
+  regY: 12,
   speed: 120,
   moving: false,
   direction: undefined,
@@ -157,10 +159,20 @@ function movePlayer(deltaTime) {
 }
 
 function canMoveTo(pos) {
-  if (pos.x < 0 || pos.x > 484 || pos.y < 0 || pos.y > 340) {
+  const { row, col } = CoordinateFromPosition(pos);
+
+  if (row < 0 || row >= GRID_HEIGHT || col < 0 || col >= GRID_WIDTH) {
     return false;
-  } else {
-    return true;
+  }
+
+  const tileType = getTileAtCoordinate({ row, col });
+  switch (tileType) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    case 3:
+      return false;
   }
 }
 
@@ -178,7 +190,9 @@ function displayPlayerAnimation() {
 
 function displayPlayerAtPosition() {
   const visualPlayer = document.querySelector("#player");
-  visualPlayer.style.translate = `${player.x}px ${player.y}px`;
+  visualPlayer.style.translate = `${player.x - player.regX}px ${
+    player.y - player.regY
+  }px`;
 }
 
 function createTiles() {
@@ -226,6 +240,8 @@ function getClassForTileType(tileType) {
 
 function showDebugging() {
   showDebugTileUnderPlayer();
+  showDebugPlayerRect();
+  showDebugPlayerRegistrationPoint();
 }
 
 let lastPlayerCoordinate = { row: 0, col: 0 };
@@ -253,4 +269,21 @@ function unHighlightTile({ row, col }) {
   const visualTiles = document.querySelectorAll("#background .tile");
   const visualTile = visualTiles[row * GRID_WIDTH + col];
   visualTile.classList.remove("highlight");
+}
+
+function showDebugPlayerRect() {
+  const visualPlayer = document.querySelector("#player");
+  if (!visualPlayer.classList.contains("show-rect")) {
+    visualPlayer.classList.add("show-rect");
+  }
+}
+
+function showDebugPlayerRegistrationPoint() {
+  const visualPlayer = document.querySelector("#player");
+  if (!visualPlayer.classList.contains("show-reg-point")) {
+    visualPlayer.classList.add("show-reg-point");
+  }
+
+  visualPlayer.style.setProperty("--regX", player.regX + "px");
+  visualPlayer.style.setProperty("--regY", player.regY + "px");
 }
