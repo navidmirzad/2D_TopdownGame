@@ -28,7 +28,7 @@ body {
     background-size: 100%;
     image-rendering: pixelated;
 
-    background-image: url('images/tiles/flowers.png')
+    //background-image: url('images/tiles/flowers.png')
 }
 
 .tile.path {
@@ -36,7 +36,11 @@ body {
 }
 
 .tile.grass {
-    background-image: url('images/tiles/path.png')
+    background-image: url('images/tiles/grass.png')
+}
+
+.tile.water {
+    background-image: url('images/tiles/water.png')
 }
 
 #characters {
@@ -46,7 +50,7 @@ body {
 #player {
     width: 32px;
     height: 40px;
-    background-image: url("images/character/Character 1.png");
+    background-image: url("/images/characters/Character 1.png");
     background-size: 400% 400%;
     image-rendering: pixelated;
 }
@@ -124,4 +128,8 @@ body {
     }
 }
 
+.highlight {
+    outline: 2px dashed yellow;
+    translate: 0 0;
+}
 

@@ -28,6 +28,8 @@ function tick(timestamp) {
 
   displayPlayerAtPosition();
   displayPlayerAnimation();
+
+  showDebugging();
 }
 
 // Model
@@ -40,18 +42,18 @@ const player = {
 };
 
 const tiles = [
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
-  [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0],
-  [0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0],
-  [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
-  [0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0],
-  [0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
-  [0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
-  [0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
-  [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+  [1, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 0, 0, 3, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+  [1, 1, 0, 1, 0, 0, 3, 1, 0, 0, 0, 0, 0, 1, 0, 0],
+  [0, 0, 0, 1, 0, 0, 3, 1, 1, 1, 1, 0, 0, 1, 0, 0],
+  [0, 0, 0, 1, 0, 0, 3, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+  [0, 1, 1, 1, 1, 0, 3, 0, 1, 1, 1, 0, 0, 1, 0, 0],
+  [0, 1, 0, 0, 1, 0, 3, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+  [0, 1, 0, 0, 1, 0, 3, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+  [0, 1, 1, 1, 1, 0, 3, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+  [0, 0, 0, 0, 1, 0, 3, 0, 1, 0, 0, 0, 0, 1, 0, 0],
   [0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+  [0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 1, 0, 0],
 ];
 
 const GRID_HEIGHT = tiles.length; // row
@@ -61,6 +63,15 @@ const TILE_SIZE = 32;
 function getTileAtCoordinate({ row, col }) {
   return tiles[row][col];
 }
+
+function CoordinateFromPosition({ x, y }) {
+  const row = Math.floor(y / TILE_SIZE);
+  const col = Math.floor(x / TILE_SIZE);
+  const coordinate = { row, col };
+  return coordinate;
+}
+
+function positionFromCoordinate() {}
 
 function keyDown(event) {
   switch (event.key) {
@@ -186,18 +197,60 @@ function createTiles() {
 }
 
 function displayTiles() {
-  const visualTiles = document.querySelector("#background .tile");
+  const visualTiles = document.querySelectorAll("#background .tile");
 
   for (let row = 0; row < GRID_HEIGHT; row++) {
     for (let col = 0; col < GRID_WIDTH; col++) {
-      const mode = getTileAtCoordinate({ row, col });
+      const tileType = getTileAtCoordinate({ row, col });
       const visualTile = visualTiles[row * GRID_WIDTH + col];
 
-      visualTile.classList.add(getClassForTileType(modelTiles));
+      visualTile.classList.add(getClassForTileType(tileType));
     }
   }
 }
 
-function getClassForTileType( typeType) {
-  switch(tileType)
+function getClassForTileType(tileType) {
+  switch (tileType) {
+    case 0:
+      return "grass";
+    case 1:
+      return "path";
+    case 2:
+      return "flowers";
+    case 3:
+      return "water";
+    default:
+      return "";
+  }
+}
+
+function showDebugging() {
+  showDebugTileUnderPlayer();
+}
+
+let lastPlayerCoordinate = { row: 0, col: 0 };
+
+function showDebugTileUnderPlayer() {
+  const coordinate = CoordinateFromPosition(player);
+
+  if (
+    coordinate.row != lastPlayerCoordinate.row ||
+    coordinate.col != lastPlayerCoordinate.col
+  ) {
+    unHighlightTile(lastPlayerCoordinate);
+    highlightTile(coordinate);
+  }
+  lastPlayerCoordinate = coordinate;
+}
+
+function highlightTile({ row, col }) {
+  const visualTiles = document.querySelectorAll("#background .tile");
+  const visualTile = visualTiles[row * GRID_WIDTH + col];
+  visualTile.classList.add("highlight");
+}
+
+function unHighlightTile({ row, col }) {
+  const visualTiles = document.querySelectorAll("#background .tile");
+  const visualTile = visualTiles[row * GRID_WIDTH + col];
+  visualTile.classList.remove("highlight");
 }
