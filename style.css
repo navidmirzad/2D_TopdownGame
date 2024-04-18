@@ -27,8 +27,6 @@ body {
     background-repeat: no-repeat;
     background-size: 100%;
     image-rendering: pixelated;
-
-    //background-image: url('images/tiles/flowers.png')
 }
 
 .tile.path {
@@ -48,8 +46,8 @@ body {
 }
 
 #player {
-    width: 22px;
-    height: 28px;
+    width: 24px;
+    height: 30px;
     background-image: url("/images/characters/Character 1.png");
     background-size: 400% 400%;
     image-rendering: pixelated;
