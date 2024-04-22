@@ -37,7 +37,13 @@ const player = {
   x: 0,
   y: 0,
   regX: 10,
-  regY: 12,
+  regY: 16,
+  hitbox: {
+    x: 4,
+    y: 5,
+    w: 15,
+    h: 22,
+  },
   speed: 120,
   moving: false,
   direction: undefined,
@@ -242,6 +248,7 @@ function showDebugging() {
   showDebugTileUnderPlayer();
   showDebugPlayerRect();
   showDebugPlayerRegistrationPoint();
+  showDebugPlayerHitbox();
 }
 
 let lastPlayerCoordinate = { row: 0, col: 0 };
@@ -286,4 +293,17 @@ function showDebugPlayerRegistrationPoint() {
 
   visualPlayer.style.setProperty("--regX", player.regX + "px");
   visualPlayer.style.setProperty("--regY", player.regY + "px");
+}
+
+function showDebugPlayerHitbox() {
+  const visualPlayer = document.querySelector("#player");
+  if (!visualPlayer.classList.contains("show-hitbox")) {
+    visualPlayer.classList.add("show-hitbox");
+  }
+
+  visualPlayer.style.setProperty("--hitboxX", player.hitbox.x + "px");
+  visualPlayer.style.setProperty("--hitboxY", player.hitbox.y + "px");
+
+  visualPlayer.style.setProperty("--hitboxW", player.hitbox.w + "px");
+  visualPlayer.style.setProperty("--hitboxH", player.hitbox.h + "px");
 }

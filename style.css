@@ -48,8 +48,8 @@ body {
 }
 
 #player {
-    width: 22px;
-    height: 28px;
+    width: 24px;
+    height: 30px;
     background-image: url("/images/characters/Character 1.png");
     background-size: 400% 400%;
     image-rendering: pixelated;
@@ -147,4 +147,14 @@ body {
     height: 3px;
 
     translate: var(--regX) var(--regY);
+}
+
+.show-hitbox::after {
+    content: "";
+    position: absolute;
+    width: var(--hitboxW);
+    height: var(--hitboxH);
+    translate: var(--hitboxX) var(--hitboxY);
+
+    outline: 2px solid hotpink;
 }
