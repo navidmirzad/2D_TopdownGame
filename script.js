@@ -73,8 +73,8 @@ function getTileAtCoordinate({ row, col }) {
 }
 
 function CoordinateFromPosition({ x, y }) {
-  const row = Math.round(y / TILE_SIZE);
-  const col = Math.round(x / TILE_SIZE);
+  const row = Math.floor(y / TILE_SIZE);
+  const col = Math.floor(x / TILE_SIZE);
   const coordinate = { row, col };
   return coordinate;
 }
